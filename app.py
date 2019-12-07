@@ -9,7 +9,7 @@ print("Go Selenium go!")
 
 
 browser = webdriver.Chrome()
-browser.implicitly_wait(3)
+browser.implicitly_wait(5)
 browser.get("https://uni2.playstarfleetextreme.com/")
 
 
@@ -22,14 +22,26 @@ browser.find_element_by_xpath("//*[@id='login']").send_keys("Das Engineer")
 browser.execute_script("document.getElementsByClassName('mainForm')[3].value='pwd4phil'")
 browser.find_element_by_xpath("//*[@id='signInNow']").click()
 
+
+# Check if lucky draw is activated
+def check_for_lucky_draw():
+    browser.find_element_by_xpath("//*[@id='roll_button']").click()
+    # Need to somehow check if lucky draw has multiple ones
+
+
+
 # Search for viable targets
 def search_for_targets():
+    for i in range(15):
+        pass
 
 
+if browser.find_element_by_id("content").get_attribute("class") == "lucky_draw index":
+    check_for_lucky_draw()
 
 if not zeus_fleet_busy:
     # Go to galaxy page
-    browser.find_element_by_xpath("//*[@id='user_planets']/div/div[2]/div/div[2]/a[1]").click()
+    browser.get("https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000215931&galaxy=1&solar_system=249")
     browser.find_element_by_xpath("//*[@id='galaxy_nav']").click()
 
     # Scroll up through galaxy
