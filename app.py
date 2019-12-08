@@ -29,11 +29,25 @@ def check_for_lucky_draw():
     # Need to somehow check if lucky draw has multiple ones
 
 
-
 # Search for viable targets
-def search_for_targets():
+def search_for_targets(ss_system, galaxy):
+    # Disable implicit waiting to speed up target search
+    browser.implicitly_wait(0)
     for i in range(15):
-        pass
+        try:
+            if browser.find_element_by_id(f"planet_{i+1}e"):
+                if browser.find_element_by_xpath(f"//*[@id='planet_{i+1}']/td[2]/div").get_attribute("class") == "inline_action":
+                    planet_name = browser.find_element_by_xpath(f"//*[@id='planet_{i+1}e']/td[2]/span").text
+                    player_name = browser.find_element_by_xpath(f"//*[@id='planet_{i+1}e']/td[4]").text
+                    full_name = planet_name + " " + player_name
+                    target_list = ["Large Floating Colony Krug", "Large Floating Colony Urcath", "Abandoned Colossus Platform Seekers"]
+                    if full_name in target_list:
+                        print(f"Found target at planet: [{galaxy}:{ss_system}:{i+1}]")
+        except BaseException as e:
+            pass
+            # print(f"Exception: {e}")
+    # Reactivate implicit waiting
+    browser.implicitly_wait(5)
 
 
 if browser.find_element_by_id("content").get_attribute("class") == "lucky_draw index":
@@ -47,11 +61,12 @@ if not zeus_fleet_busy:
     # Scroll up through galaxy
     for i in range(20):
         time.sleep(1)
-        SS_system = int(browser.find_element_by_xpath("//*[@id='solar_system']").get_attribute("value"))
+        ss_system = int(browser.find_element_by_xpath("//*[@id='solar_system']").get_attribute("value"))
+        galaxy = int(browser.find_element_by_xpath("//*[@id='galaxy']").get_attribute("value"))
+        search_for_targets(ss_system, galaxy)
         browser.find_element_by_xpath("//*[@id='solar_system']").clear()
-        print(f"SS: {SS_system}")
-        SS_system += 1
-        browser.find_element_by_xpath("//*[@id='solar_system']").send_keys(SS_system)
+        ss_system += 1
+        browser.find_element_by_xpath("//*[@id='solar_system']").send_keys(ss_system)
         browser.find_element_by_xpath("//*[@id='set_coordinates_form']/div[3]/span[1]/a/span").click()
 
     # Reset SS location to home
@@ -62,16 +77,17 @@ if not zeus_fleet_busy:
     # Scroll down through galaxy
     for i in range(20):
         time.sleep(1)
-        SS_system = int(browser.find_element_by_xpath("//*[@id='solar_system']").get_attribute("value"))
+        ss_system = int(browser.find_element_by_xpath("//*[@id='solar_system']").get_attribute("value"))
+        galaxy = int(browser.find_element_by_xpath("//*[@id='galaxy']").get_attribute("value"))
+        search_for_targets(ss_system, galaxy)
         browser.find_element_by_xpath("//*[@id='solar_system']").clear()
-        print(f"SS: {SS_system}")
-        SS_system -= 1
-        browser.find_element_by_xpath("//*[@id='solar_system']").send_keys(SS_system)
+        ss_system -= 1
+        browser.find_element_by_xpath("//*[@id='solar_system']").send_keys(ss_system)
         browser.find_element_by_xpath("//*[@id='set_coordinates_form']/div[3]/span[1]/a/span").click()
 
 
 class Target:
-    def __init__(self, galaxy, system, planet):
+    def __init__(self, galaxy, system, planet, priority):
         self.galaxy = galaxy
         self.system = system
         self.planet = planet
