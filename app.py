@@ -1,7 +1,7 @@
 from selenium import webdriver
+from target import Target
 import selenium
 import time
-from target import Target
 
 heph_fleet_busy = False
 zeus_fleet_busy = False
@@ -9,7 +9,7 @@ targets = []
 
 print("Go Selenium go!")
 
-
+# Open webpage
 browser = webdriver.Chrome()
 browser.implicitly_wait(5)
 browser.get("https://uni2.playstarfleetextreme.com/")
