@@ -3,6 +3,8 @@ from selenium import webdriver
 import selenium
 from time import sleep
 from threading import Thread
+import threading
+import sys
 
 
 # This class holds the static variables
@@ -16,8 +18,11 @@ def change_zeus_fleet_status(thread_name, delay):
     print("Thread: " + thread_name)
     print(delay)
     sleep(delay)
-    Controller.zeus_fleet_status = False
-    print("Wake up!")
+    Controller.zeus_fleet_active = False
+
+    # End thread
+    print("Ending zeus thread")
+    sys.exit()
 
 
 # If this is the first file called, run
@@ -36,14 +41,10 @@ if __name__ == "__main__":
             try:
                 # Create new thread to change zeus fleet status back to False once fleet returns
                 zeus_thread = Thread(target=change_zeus_fleet_status,
-                                     args=("Change Zeus Fleet Status", 10,))
+                                     args=("Change Zeus Fleet Status", 5,))
                 # Start the zeus fleet thread
                 zeus_thread.start()
                 print("Starting zeus thread")
-
-                # End zeus thread by joining it with the main thread
-                zeus_thread.join()
-                print("Ending zeus thread")
 
             except:
                 print("Error: Unable to start zeus thread")
@@ -58,4 +59,4 @@ if __name__ == "__main__":
             # Harvest debris field
             print("Harvesting debris field")
 
-            # Controller.heph_active = True
+            Controller.heph_active = True
