@@ -29,6 +29,15 @@ def change_zeus_fleet_status(thread_name, delay):
 if __name__ == "__main__":
     print("Go Selenium!")
 
+    # Start webdriver
+    try:
+        browser = webdriver.Chrome()
+
+    except:
+        print("Error: Selenium Webdriver could not be started")
+
+    login(browser)
+
     while True:
         if Controller.zeus_fleet_active == False:
             # Find target
