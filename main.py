@@ -41,7 +41,7 @@ def run(browser):
 
         if Controller.zeus_fleet_active == False:
             # Find targets
-            print("Find targets")
+            print("Finding targets")
             target_list = []
             target_list.extend(find_targets(browser))
 
