@@ -21,8 +21,11 @@ def target_launcher(browser, target):
     browser.find_element_by_xpath(
         "//*[@id='assign_fleet_form']/div[1]/div[2]/div/div[4]/div[2]/div/div[1]/input").click()
     duration = browser.find_element_by_xpath(
-        "//*[@id='task_duration']").get_attribute("value")
+        "//*[@id='task_duration']").text
+
+    print(f"Duration is: {duration}")
+
     browser.find_element_by_xpath("//*[@id='assign_button']").click()
-    print(f"Zeus fleet launched at: {target.location}")
+    print(f"Zeus fleet launched at: {target.location()}")
 
     return duration

@@ -69,7 +69,7 @@ def run(browser):
 
             # Launch on target
             print(f"Launching at target: {target.location()}")
-            target_launcher(browser, target)
+            duration = target_launcher(browser, target)
 
             Controller.used_target_list.append(target)
 
@@ -115,4 +115,9 @@ if __name__ == "__main__":
     login(browser)
 
     # Run the automator
-    run(browser)
+    # run(browser)
+
+    print("Nasa one test menu")
+    target = Target(1, 252, 7, 3)
+    duration = target_launcher(browser, target)
+    print(duration)
