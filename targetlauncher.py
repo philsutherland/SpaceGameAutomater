@@ -20,10 +20,14 @@ def target_launcher(browser, target):
     # Select all zeus ships and launch
     browser.find_element_by_xpath(
         "//*[@id='assign_fleet_form']/div[1]/div[2]/div/div[4]/div[2]/div/div[1]/input").click()
-    duration = browser.find_element_by_xpath(
-        "//*[@id='task_duration']").text
+    time.sleep(2)
+    travel_time = str(browser.find_element_by_xpath(
+        "//*[@id='task_duration']").text)
+    travel_time = travel_time.split(":")
+    duration = (int(travel_time[0])*3600 +
+                int(travel_time[1])*60 + int(travel_time[2])) * 2
 
-    print(f"Duration is: {duration}")
+    print(f"Duration is: {duration}s")
 
     browser.find_element_by_xpath("//*[@id='assign_button']").click()
     print(f"Zeus fleet launched at: {target.location()}")
