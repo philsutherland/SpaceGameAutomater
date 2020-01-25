@@ -83,7 +83,7 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
             print(f"Specific Error {e}")
 
         # Print the current system that is being searched
-        print(f"Searching: [{galaxy}:{ss_system}:0]")
+        print(f"Searching system: [{galaxy}:{ss_system}:0]")
 
         # Add viable targets from searched SS to the target list
         target_list.extend(search_for_targets(browser, ss_system, galaxy))
@@ -106,6 +106,7 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
 
 # Scroll though the SS systems to find targets
 def find_targets(browser):
+    limit = 20
     target_list = []
 
     # Go to galaxy page
@@ -117,7 +118,7 @@ def find_targets(browser):
         print(f"Specific Error {e}")
 
     # Scroll up through galaxy
-    target_list.extend(galaxy_scroller(browser, 1, 20, 1))
+    target_list.extend(galaxy_scroller(browser, 1, limit, 1))
 
     # Reset SS location to one system below home system
     try:
@@ -129,6 +130,6 @@ def find_targets(browser):
         print(f"Specific Error {e}")
 
     # Scroll down through galaxy
-    target_list.extend(galaxy_scroller(browser, -1, -20, -1))
+    target_list.extend(galaxy_scroller(browser, -1, -limit, -1))
 
     return target_list

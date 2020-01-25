@@ -45,8 +45,17 @@ def run(browser):
             target_list = []
             target_list.extend(find_targets(browser))
 
+            # Sort targets based on proximity
+            target_list.sort(key=lambda x: x.proximity)
+
             # Launch at target
+            print("\nTargets found:")
+            for target in target_list:
+                print(
+                    f"Location: {target.location()} Proximity:{target.proximity}")
+
             print("Launch at target")
+            # Controller.used_target_list.append()
 
             Controller.zeus_fleet_active = True
 
@@ -58,7 +67,6 @@ def run(browser):
                 # Start the zeus fleet thread
                 zeus_thread.start()
                 print("Starting zeus thread")
-
             except:
                 print("Error: Unable to start zeus thread")
 
