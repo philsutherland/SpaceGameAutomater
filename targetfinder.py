@@ -4,7 +4,8 @@ from target import Target
 
 
 # Search for viable targets within a system
-def search_for_targets(browser, ss_system, galaxy):
+def search_for_targets(browser, system, galaxy):
+
     # Disable implicit waiting to speed up target search
     browser.implicitly_wait(0)
 
@@ -48,12 +49,12 @@ def search_for_targets(browser, ss_system, galaxy):
                     # If the selected target is acceptable, add it to the target list
                     if full_name in accepted_target_type:
                         target_list.append(
-                            Target(galaxy, ss_system, i+1, abs(249 - ss_system)))
+                            Target(galaxy, system, i+1, abs(249 - system)))
                         print(
-                            f"Found target at planet: [{galaxy}:{ss_system}:{i+1}]")
+                            f"Found target at planet: [{galaxy}:{system}:{i+1}]")
         except BaseException as e:
             print(
-                f"Error: Something went wrong while searching for targets in [{galaxy}:{ss_system}:{i+1}]")
+                f"Error: Something went wrong while searching for targets in [{galaxy}:{system}:{i+1}]")
             print(f"Specific Error {e}")
 
     # Reactivate implicit waiting
@@ -71,7 +72,7 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
 
         try:
             # Get current SS
-            ss_system = int(browser.find_element_by_xpath(
+            system = int(browser.find_element_by_xpath(
                 "//*[@id='solar_system']").get_attribute("value"))
 
             # Get current galaxy
@@ -83,17 +84,17 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
             print(f"Specific Error {e}")
 
         # Print the current system that is being searched
-        print(f"Searching system: [{galaxy}:{ss_system}:0]")
+        print(f"Searching system: [{galaxy}:{system}:0]")
 
         # Add viable targets from searched SS to the target list
-        target_list.extend(search_for_targets(browser, ss_system, galaxy))
+        target_list.extend(search_for_targets(browser, system, galaxy))
 
         # Navigate to new SS
         try:
             browser.find_element_by_xpath("//*[@id='solar_system']").clear()
-            ss_system = 249 + i
+            system = 249 + i
             browser.find_element_by_xpath(
-                "//*[@id='solar_system']").send_keys(ss_system)
+                "//*[@id='solar_system']").send_keys(system)
             browser.find_element_by_xpath(
                 "//*[@id='set_coordinates_form']/div[3]/span[1]/a/span").click()
         except BaseException as e:

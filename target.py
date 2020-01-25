@@ -1,9 +1,9 @@
 class Target:
-    def __init__(self, galaxy, ss_system, planet, proximity):
+    def __init__(self, galaxy, system, planet, proximity):
         self.galaxy = galaxy
-        self.ss_system = ss_system
+        self.system = system
         self.planet = planet
         self.proximity = proximity
 
     def location(self):
-        return f"[{self.galaxy}:{self.ss_system}:{self.planet}]"
+        return f"[{self.galaxy}:{self.system}:{self.planet}e]"

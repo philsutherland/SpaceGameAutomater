@@ -8,6 +8,7 @@ from login import login
 from luckydraw import check_for_lucky_draw
 from target import Target
 from targetfinder import find_targets
+from targetlauncher import target_launcher
 
 
 # This class holds the static variables
@@ -32,7 +33,7 @@ def change_zeus_fleet_status(thread_name, delay):
 def run(browser):
     # Go to galaxy page
     browser.get(
-        "https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000216225&galaxy=1&solar_system=249")
+        f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000216225&galaxy=1&solar_system=249")
 
     while True:
         # Lucky draw could pop up at any time so it needs to be checked for in each iteration
@@ -40,8 +41,10 @@ def run(browser):
             check_for_lucky_draw(browser)
 
         if Controller.zeus_fleet_active == False:
+
             # Find targets
             print("Finding targets")
+            target = None
             target_list = []
             target_list.extend(find_targets(browser))
 
@@ -54,8 +57,21 @@ def run(browser):
                 print(
                     f"Location: {target.location()} Proximity:{target.proximity}")
 
-            print("Launch at target")
-            # Controller.used_target_list.append()
+            # Check if target has been hit before
+            try:
+                for _target in target_list:
+                    if not any(x.location == _target.location for x in Controller.used_target_list):
+                        target = _target
+            except BaseException as e:
+                print(
+                    f"Error: Something went wrong while checking if the target has been hit before")
+                print(f"Specific Error {e}")
+
+            # Launch on target
+            print(f"Launching at target: {target.location()}")
+            target_launcher(browser, target)
+
+            Controller.used_target_list.append(target)
 
             Controller.zeus_fleet_active = True
 
