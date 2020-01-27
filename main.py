@@ -1,8 +1,9 @@
 from selenium import webdriver
-import selenium
+import random
+# import selenium
 from time import sleep
 from threading import Thread
-import threading
+# import threading
 import sys
 from login import login
 from luckydraw import check_for_lucky_draw
@@ -21,9 +22,17 @@ class Controller:
 # Changes the status of the zeus fleet once it returns from an attack
 def change_zeus_fleet_status(thread_name, delay):
     print("Thread: " + thread_name)
-    print(delay)
+
+    # Add a random 5 - 10 minutes onto the time between zeus fleet return and launch
+    delay += 300 + random.random()*300
+    print(f"The delay is: {delay}"s)
+
+    # Sleep the thread for the duration of the delay
     sleep(delay)
+
+    # Make  the zeus fleet active again
     Controller.zeus_fleet_active = False
+    print("Zeus fleet now nonactive")
 
     # End thread
     print("Ending zeus thread")
@@ -78,7 +87,7 @@ def run(browser):
             try:
                 # Create new thread to change zeus fleet status back to False once fleet returns
                 zeus_thread = Thread(target=change_zeus_fleet_status,
-                                     args=("Change Zeus Fleet Status", 5,))
+                                     args=("Change Zeus Fleet Status", duration,))
 
                 # Start the zeus fleet thread
                 zeus_thread.start()
@@ -115,9 +124,6 @@ if __name__ == "__main__":
     login(browser)
 
     # Run the automator
-    # run(browser)
+    run(browser)
 
     print("Nasa one test menu")
-    target = Target(1, 252, 7, 3)
-    duration = target_launcher(browser, target)
-    print(duration)
