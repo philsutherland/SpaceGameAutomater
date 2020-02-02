@@ -1,4 +1,5 @@
 import selenium
+from restart import restart
 
 
 def login(browser):
@@ -6,8 +7,10 @@ def login(browser):
     try:
         browser.implicitly_wait(5)
         browser.get("https://uni2.playstarfleetextreme.com/")
-    except:
+    except BaseException as e:
         print("Error: Could not access game website")
+        print(f"Specific Error {e}")
+        restart()
 
     # Log into game
     try:
@@ -20,5 +23,7 @@ def login(browser):
         browser.execute_script(
             "document.getElementsByClassName('mainForm')[3].value='pwd4phil'")
         browser.find_element_by_xpath("//*[@id='signInNow']").click()
-    except:
+    except BaseException as e:
         print("Error: A problem occured while trying to login")
+        print(f"Specific Error {e}")
+        restart()

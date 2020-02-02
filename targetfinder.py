@@ -1,6 +1,7 @@
 import selenium
 import time
 from target import Target
+from restart import restart
 
 
 # Search for viable targets within a system
@@ -56,6 +57,7 @@ def search_for_targets(browser, system, galaxy):
             print(
                 f"Error: Something went wrong while searching for targets in [{galaxy}:{system}:{i+1}]")
             print(f"Specific Error {e}")
+            restart()
 
     # Reactivate implicit waiting
     browser.implicitly_wait(5)
@@ -82,6 +84,7 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
             print(
                 f"Error: Something went wrong while trying to get current SS or galaxy")
             print(f"Specific Error {e}")
+            restart()
 
         # Print the current system that is being searched
         print(f"Searching system: [{galaxy}:{system}:0]")
@@ -101,6 +104,7 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
             print(
                 f"Error: Something went wrong while trying to navigate to a new SS")
             print(f"Specific Error {e}")
+            restart()
 
     return target_list
 
@@ -117,6 +121,7 @@ def find_targets(browser):
     except BaseException as e:
         print(f"Error: Something went wrong while trying to go to the galaxy page")
         print(f"Specific Error {e}")
+        restart()
 
     # Scroll up through galaxy
     target_list.extend(galaxy_scroller(browser, 1, limit, 1))
@@ -129,6 +134,7 @@ def find_targets(browser):
     except BaseException as e:
         print(f"Error: Something went wrong while trying to reset SS location")
         print(f"Specific Error {e}")
+        restart()
 
     # Scroll down through galaxy
     target_list.extend(galaxy_scroller(browser, -1, -limit, -1))
