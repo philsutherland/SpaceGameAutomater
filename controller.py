@@ -7,7 +7,7 @@ from luckydraw import check_for_lucky_draw
 from target import Target
 from targetfinder import find_targets
 from targetlauncher import target_launcher
-from restart import restart
+from restart import rerun
 
 
 # This class holds the static variables
@@ -46,7 +46,7 @@ def run(browser):
     except BaseException as e:
         print("Error: Unable to initially go to game page")
         print(f"Specific Error {e}")
-        restart()
+        rerun(browser)
 
     while True:
         # Lucky draw could pop up at any time so it needs to be checked for in each iteration
@@ -79,7 +79,7 @@ def run(browser):
                 print(
                     f"Error: Something went wrong while checking if the target has been hit before")
                 print(f"Specific Error {e}")
-                restart()
+                rerun(browser)
 
             # Launch on target
             print(f"Launching at target: {target.location()}")
@@ -103,7 +103,7 @@ def run(browser):
             except BaseException as e:
                 print("Error: Unable to start zeus thread")
                 print(f"Specific Error {e}")
-                restart()
+                rerun(browser)
 
         if Controller.heph_active == False:
             # Find debris field

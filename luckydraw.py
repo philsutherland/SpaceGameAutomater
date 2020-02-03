@@ -1,5 +1,5 @@
 import selenium
-from restart import restart
+from restart import rerun
 
 
 def check_for_lucky_draw(browser):
@@ -10,4 +10,4 @@ def check_for_lucky_draw(browser):
     except BaseException as e:
         print("Error: A problem occured while trying to check for lucky draw")
         print(f"Specific Error {e}")
-        restart()
+        rerun(browser)

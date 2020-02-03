@@ -1,5 +1,5 @@
 import selenium
-from restart import restart
+from restart import restart_program
 
 
 def login(browser):
@@ -10,7 +10,7 @@ def login(browser):
     except BaseException as e:
         print("Error: Could not access game website")
         print(f"Specific Error {e}")
-        restart()
+        restart_program()
 
     # Log into game
     try:
@@ -26,4 +26,4 @@ def login(browser):
     except BaseException as e:
         print("Error: A problem occured while trying to login")
         print(f"Specific Error {e}")
-        restart()
+        restart_program()
