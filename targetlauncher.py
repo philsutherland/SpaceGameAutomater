@@ -1,7 +1,7 @@
 import selenium
 import time
 from target import Target
-from restart import restart
+from restart import rerun
 
 
 # Launch on target
@@ -18,7 +18,7 @@ def target_launcher(browser, target):
         print(
             f"Error: Something went wrong while trying to go to galaxy page to launch on target")
         print(f"Specific Error {e}")
-        restart()
+        rerun(browser)
 
     try:
         # Click the attack button
@@ -43,6 +43,6 @@ def target_launcher(browser, target):
         print(
             f"Error: Something went wrong while trying to launch on {target.location()}")
         print(f"Specific Error {e}")
-        restart()
+        rerun(browser)
 
     return duration
