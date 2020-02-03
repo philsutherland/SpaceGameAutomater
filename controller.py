@@ -16,6 +16,8 @@ class Controller:
     zeus_fleet_active = False
     heph_active = False
     used_target_list = []
+    used_target_list.append(Target(1, 251, 13, 2))
+    used_target_list.append(Target(1, 248, 1, 1))
 
 
 # Changes the status of the zeus fleet once it returns from an attack
@@ -27,7 +29,7 @@ def change_zeus_fleet_status(thread_name, delay):
     print(f"The delay is: {delay}s")
 
     # Keep the thread waiting for the duration of the delay
-    threading.Event().wait(5)
+    threading.Event().wait(delay)
 
     # Make  the zeus fleet active again
     Controller.zeus_fleet_active = False
@@ -67,14 +69,14 @@ def run(browser):
 
             # Launch at target
             print("\nTargets found:")
-            for target in target_list:
+            for _target in target_list:
                 print(
-                    f"Location: {target.location()} Proximity: {target.proximity}")
+                    f"Location: {_target.location()} Proximity: {_target.proximity}")
 
             # Check if target has been hit before
             try:
                 for _target in target_list:
-                    if not any(x.location == _target.location for x in Controller.used_target_list):
+                    if not any(x.location() == _target.location() for x in Controller.used_target_list):
                         target = _target
                         break
             except BaseException as e:
