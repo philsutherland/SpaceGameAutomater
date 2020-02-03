@@ -2,7 +2,7 @@ from selenium import webdriver
 import sys
 from login import login
 from controller import run
-from restart import restart
+from restart import restart_program
 
 
 # If this is the first file called, run

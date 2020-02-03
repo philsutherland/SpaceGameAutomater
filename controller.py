@@ -10,7 +10,7 @@ from targetlauncher import target_launcher
 from restart import rerun
 
 
-# This class holds the static variables
+# This class holds the static variables and methods associated with running the program
 class Controller:
     zeus_fleet_active = False
     heph_active = False
@@ -18,7 +18,7 @@ class Controller:
 
 
 # Changes the status of the zeus fleet once it returns from an attack
-def change_zeus_fleet_status(thread_name, delay):
+def change_zeus_fleet_status(self, thread_name, delay):
     print("Thread: " + thread_name)
 
     # Add a random 5 - 10 minutes onto the time between zeus fleet return and launch
@@ -37,7 +37,8 @@ def change_zeus_fleet_status(thread_name, delay):
     sys.exit()
 
 
-def run(browser):
+# The method is the main loop that runs the program
+def run(self, browser):
     print("Running script")
     # Go to galaxy page
     try:

@@ -1,6 +1,5 @@
 import sys
 import os
-from controller import run
 
 
 # This function restarts the program
@@ -12,4 +11,3 @@ def restart_program():
 # This function re-runs the mainscript without restarting the entire script
 def rerun(browser):
     print("Rerunning run method")
-    run(browser)
