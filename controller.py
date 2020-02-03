@@ -3,6 +3,7 @@ import sys
 import random
 from time import sleep
 from threading import Thread
+import threading
 from luckydraw import check_for_lucky_draw
 from target import Target
 from targetfinder import find_targets
@@ -25,8 +26,8 @@ def change_zeus_fleet_status(thread_name, delay):
     delay += 300 + random.random()*300
     print(f"The delay is: {delay}s")
 
-    # Sleep the thread for the duration of the delay
-    sleep(delay)
+    # Keep the thread waiting for the duration of the delay
+    threading.Event().wait(5)
 
     # Make  the zeus fleet active again
     Controller.zeus_fleet_active = False
