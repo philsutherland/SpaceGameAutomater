@@ -41,6 +41,10 @@ def search_for_targets(browser, system, galaxy):
                     player_name = browser.find_element_by_xpath(
                         f"//*[@id='planet_{i+1}e']/td[4]").text
 
+                    # Convert the color into a single integer value that represents the amount of green
+                    color = int(str(browser.find_element_by_xpath(
+                        f"//*[@id='planet_{i+1}e']/td[4]").get_attribute("style")).split(", ")[1])
+
                     full_name = planet_name + " " + player_name
 
                     # List of acceptably large enough targets
@@ -50,7 +54,7 @@ def search_for_targets(browser, system, galaxy):
                     # If the selected target is acceptable, add it to the target list
                     if full_name in accepted_target_type:
                         target_list.append(
-                            Target(galaxy, system, i+1, abs(249 - system)))
+                            Target(galaxy, system, i+1, abs(249 - system), color))
                         print(
                             f"Found target at planet: [{galaxy}:{system}:{i+1}]")
         except BaseException as e:

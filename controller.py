@@ -69,7 +69,7 @@ def run(browser):
             print("\nTargets found:")
             for _target in target_list:
                 print(
-                    f"Location: {_target.location()} Proximity: {_target.proximity}")
+                    f"Location: {_target.location()} Proximity: {_target.proximity} Color: {_target.color}")
 
             # Check if target has been hit before
             try:
