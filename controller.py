@@ -16,8 +16,6 @@ class Controller:
     zeus_fleet_active = False
     heph_active = False
     used_target_list = []
-    used_target_list.append(Target(1, 251, 13, 2))
-    used_target_list.append(Target(1, 248, 1, 1))
 
 
 # Changes the status of the zeus fleet once it returns from an attack

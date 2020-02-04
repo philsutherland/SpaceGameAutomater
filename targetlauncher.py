@@ -26,10 +26,8 @@ def target_launcher(browser, target):
             f"//*[@id='select_fleet_link_attack_{target.planet}e']").click()
 
         # Select all zeus ships
-        # browser.find_element_by_xpath(
-        #     "//*[@id='assign_fleet_form']/div[1]/div[2]/div/div[4]/div[2]/div/div[1]/input").click()
         browser.find_element_by_xpath(
-            "//*[@id='ship_quantity_82638594']").send_keys(100)
+            "//*[@id='assign_fleet_form']/div[1]/div[2]/div/div[4]/div[2]/div/div[1]/input").click()
 
         time.sleep(2)
 
