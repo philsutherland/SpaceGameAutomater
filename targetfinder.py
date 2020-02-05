@@ -33,7 +33,7 @@ def search_for_targets(browser, system, galaxy):
         try:
             # If planet has an alien encounter, continue
             if encounter:
-                # If the planet spot is empty, continue
+                # If the planet spot is empty, continuejg
                 if empty_slot:
                     planet_name = browser.find_element_by_xpath(
                         f"//*[@id='planet_{i+1}e']/td[2]/span").text
