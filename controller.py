@@ -63,6 +63,9 @@ def run(browser):
             target_list.extend(find_targets(browser))
 
             # Sort targets based on proximity
+            target_list.sort(key=lambda x: x.proximity)
+
+            # Sort targets based on color
             target_list.sort(key=lambda x: x.color)
 
             # Launch at target
