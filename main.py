@@ -21,5 +21,10 @@ if __name__ == "__main__":
     # Initiate the login process
     login(browser)
 
-    # Run the automator
-    run(browser)
+    # Run the automator in a loop
+    while True:
+        # Make sure to update the dictioanry in the Controller object when changes run planets
+        run(browser, 1, 249, 1000000216225)
+        run(browser, 3, 200, 1000000201099)
+        run(browser, 4, 133, 1000000033163)
+        run(browser, 9, 440, 1000000029519)

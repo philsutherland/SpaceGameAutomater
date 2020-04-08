@@ -5,13 +5,13 @@ from restart import rerun
 
 
 # Launch on target
-def target_launcher(browser, target):
+def target_launcher(browser, target, galaxy, system, planet_id):
     time.sleep(2)
 
     try:
         # Go to solar system
         browser.get(
-            f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000216225&galaxy=1&solar_system={target.system}")
+            f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet={planet_id}&galaxy={galaxy}&solar_system={target.system}")
 
         time.sleep(2)
     except BaseException as e:
@@ -40,7 +40,7 @@ def target_launcher(browser, target):
 
         print(f"Duration is: {duration}s")
 
-        # Launc hatatck
+        # Launch attack
         browser.find_element_by_xpath("//*[@id='assign_button']").click()
         print(f"Zeus fleet launched at: {target.location()}")
     except BaseException as e:

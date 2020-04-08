@@ -70,7 +70,7 @@ def search_for_targets(browser, system, galaxy):
 
 
 # Scroll through galaxy
-def galaxy_scroller(browser, lower_limit, upper_limit, stride):
+def galaxy_scroller(browser, lower_limit, upper_limit, stride, galaxy, system):
     target_list = []
 
     for i in range(lower_limit, upper_limit, stride):
@@ -78,11 +78,11 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
 
         try:
             # Get current SS
-            system = int(browser.find_element_by_xpath(
+            _system = int(browser.find_element_by_xpath(
                 "//*[@id='solar_system']").get_attribute("value"))
 
             # Get current galaxy
-            galaxy = int(browser.find_element_by_xpath(
+            _galaxy = int(browser.find_element_by_xpath(
                 "//*[@id='galaxy']").get_attribute("value"))
         except BaseException as e:
             print(
@@ -91,17 +91,17 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
             rerun(browser)
 
         # Print the current system that is being searched
-        print(f"Searching system: [{galaxy}:{system}:0]")
+        print(f"Searching system: [{_galaxy}:{_system}:0]")
 
         # Add viable targets from searched SS to the target list
-        target_list.extend(search_for_targets(browser, system, galaxy))
+        target_list.extend(search_for_targets(browser, _system, _galaxy))
 
         # Navigate to new SS
         try:
             browser.find_element_by_xpath("//*[@id='solar_system']").clear()
-            system = 249 + i
+            _system = system + i
             browser.find_element_by_xpath(
-                "//*[@id='solar_system']").send_keys(system)
+                "//*[@id='solar_system']").send_keys(_system)
             browser.find_element_by_xpath(
                 "//*[@id='set_coordinates_form']/div[3]/span[1]/a/span").click()
         except BaseException as e:
@@ -114,33 +114,33 @@ def galaxy_scroller(browser, lower_limit, upper_limit, stride):
 
 
 # Scroll though the SS systems to find targets
-def find_targets(browser):
-    limit = 20
+def find_targets(browser, galaxy, system, planet_id, limit):
     target_list = []
 
     # Go to galaxy page
     try:
         browser.get(
-            "https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000216225&galaxy=1&solar_system=249")
+            f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet={planet_id}&galaxy={galaxy}&solar_system={system}")
     except BaseException as e:
         print(f"Error: Something went wrong while trying to go to the galaxy page")
         print(f"Specific Error {e}")
         rerun(browser)
 
     # Scroll up through galaxy
-    target_list.extend(galaxy_scroller(browser, 1, limit, 1))
+    target_list.extend(galaxy_scroller(browser, 1, limit, 1, galaxy, system))
 
     # Reset SS location to one system below home system
     try:
         time.sleep(1)
         browser.get(
-            "https://uni2.playstarfleetextreme.com/galaxy/show?current_planet=1000000216225&galaxy=1&solar_system=249")
+            f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet={planet_id}&galaxy={galaxy}&solar_system={system}")
     except BaseException as e:
         print(f"Error: Something went wrong while trying to reset SS location")
         print(f"Specific Error {e}")
         rerun(browser)
 
     # Scroll down through galaxy
-    target_list.extend(galaxy_scroller(browser, -1, -limit, -1))
+    target_list.extend(galaxy_scroller(
+        browser, -1, -limit, -1, galaxy, system))
 
     return target_list
