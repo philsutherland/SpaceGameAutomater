@@ -49,7 +49,7 @@ def search_for_targets(browser, system, galaxy):
 
                     # List of acceptably large enough targets
                     accepted_target_type = ["Large Floating Colony Krug",
-                                            "Large Floating Colony Urcath", "Abandoned Colossus Platform Seekers"]
+                                            "Large Floating Colony Urcath", "Abandoned Colossus Platform Seekers", "Large Abandoned Leviathan Seekers"]
 
                     # If the selected target is acceptable, add it to the target list
                     if full_name in accepted_target_type:
