@@ -46,6 +46,10 @@ def target_launcher(browser, target, galaxy, system, planet_id):
         # Launch attack
         browser.find_element_by_xpath("//*[@id='assign_button']").click()
         print(f"Zeus fleet launched at: {target.location()}")
+
+        # Pause to let attack process
+        time.sleep(2)
+        
     except BaseException as e:
         print(
             f"Error: Something went wrong while trying to launch on {target.location()}")

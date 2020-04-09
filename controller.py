@@ -96,18 +96,18 @@ def run(browser, galaxy, system, planet_id):
 
         # Change zeus fleet to active
         Controller.zeus_fleet_active[str(planet_id)] = True
-        print("Zeus fleet now active")
+        print(f"Zeus fleet now active for planet: {planet_id}")
 
         try:
             # Create new thread to change zeus fleet status back to False once fleet returns
             zeus_thread = Thread(target=change_zeus_fleet_status,
-                                 args=("Change Zeus Fleet Status", duration, planet_id))
+                                 args=(f"Change Zeus Fleet Status for planet: {planet_id}", duration, planet_id))
 
             # Start the zeus fleet thread
             zeus_thread.start()
-            print("Starting zeus thread")
+            print(f"Starting zeus thread for planet: {planet_id}")
         except BaseException as e:
-            print("Error: Unable to start zeus thread")
+            print(f"Error: Unable to start zeus thread for planet {planet_id}")
             print(f"Specific Error {e}")
             rerun(browser)
 
