@@ -42,20 +42,20 @@ def change_zeus_fleet_status(thread_name, delay, planet_id):
 
 # This method is the main loop that runs the program
 def run(browser, galaxy, system, planet_id):
-    # Go to galaxy page
-    try:
-        browser.get(
-            f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet={planet_id}&galaxy={galaxy}&solar_system={system}")
-    except BaseException as e:
-        print("Error: Unable to initially go to game page")
-        print(f"Specific Error {e}")
-        rerun(browser)
-
-    # Lucky draw could pop up at any time so it needs to be checked for in each iteration
-    if browser.find_element_by_id("content").get_attribute("class") == "lucky_draw index":
-        check_for_lucky_draw(browser)
-
     if Controller.zeus_fleet_active[str(planet_id)] == False:
+        # Go to galaxy page
+        try:
+            browser.get(
+                f"https://uni2.playstarfleetextreme.com/galaxy/show?current_planet={planet_id}&galaxy={galaxy}&solar_system={system}")
+        except BaseException as e:
+            print("Error: Unable to initially go to game page")
+            print(f"Specific Error {e}")
+            rerun(browser)
+
+        # Lucky draw could pop up at any time so it needs to be checked for in each iteration
+        if browser.find_element_by_id("content").get_attribute("class") == "lucky_draw index":
+            check_for_lucky_draw(browser)
+
         # Find targets
         print(f"Finding targets for planet location: ({galaxy}:{system}:0)")
         target = None
